@@ -1,219 +1,338 @@
-// =========================
-// ELEMENTS
-// =========================
+// =====================================
+// TYPEWRITER EFFECT
+// =====================================
 
-const screens = document.querySelectorAll(".screen");
+const typedContainer = document.getElementById("typedLetter");
 
-const landing = document.getElementById("landing");
-const wishScreen = document.getElementById("wishScreen");
-const envelopeScreen = document.getElementById("envelopeScreen");
-const letterScreen = document.getElementById("letterScreen");
-const endingScreen = document.getElementById("endingScreen");
+const paragraphs = [...typedContainer.querySelectorAll("p")];
 
-const star = document.getElementById("shootingStar");
-const envelope = document.querySelector(".envelope");
-const continueBtn = document.getElementById("continueBtn");
+const originalParagraphs = paragraphs.map(p => p.innerHTML);
 
-const music = document.getElementById("music");
+paragraphs.forEach(p=>p.innerHTML="");
 
-function showScreen(screen){
+let letterPlayed = false;
 
-    screens.forEach(s=>{
-        s.classList.remove("active");
-    });
+function typeParagraph(index){
 
-    screen.classList.add("active");
-}
+    if(index>=paragraphs.length){
 
-// =========================
-// STAR BACKGROUND
-// =========================
+        continueBtn.style.opacity="1";
+        continueBtn.style.pointerEvents="auto";
 
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+        return;
+    }
 
-let stars=[];
-let bandStars=[];
+    let html = originalParagraphs[index];
 
-function seedStars(){
+    let i = 0;
 
-    stars=[];
-    bandStars=[];
+    function write(){
 
-    for(let i=0;i<250;i++){
+        if(i<html.length){
 
-        stars.push({
+            paragraphs[index].innerHTML = html.substring(0,i+1);
 
-            x:Math.random()*canvas.width,
-            y:Math.random()*canvas.height,
+            i++;
 
-            r:Math.random()*2,
+            setTimeout(write,18);
 
-            a:Math.random(),
+        }else{
 
-            s:Math.random()*0.015+0.003
+            setTimeout(()=>{
 
-        });
+                typeParagraph(index+1);
+
+            },350);
+
+        }
 
     }
 
-    const bandCount=Math.floor((canvas.width*canvas.height)/1400);
+    write();
 
-    for(let i=0;i<bandCount;i++){
+}
 
-        const t=Math.random();
+function playLetter(){
 
-        const bandWidth=canvas.height*0.32;
+    if(letterPlayed) return;
 
-        const cx=t*canvas.width;
+    letterPlayed = true;
 
-        const cy=canvas.height*0.65 - t*canvas.height*0.55 + (Math.random()-0.5)*bandWidth;
+    continueBtn.style.opacity="0";
 
-        bandStars.push({
+    continueBtn.style.pointerEvents="none";
 
-            x:cx,
-            y:cy,
+    typeParagraph(0);
 
-            r:Math.random()*1.2+0.2,
+}
 
-            a:Math.random(),
+setTimeout(()=>{
 
-            s:Math.random()*0.012+0.003
+    if(letterScreen.classList.contains("active")){
 
-        });
+        playLetter();
 
     }
 
-}
+},1000);
 
-function resize(){
 
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
+// =====================================
+// LETTER OBSERVER
+// =====================================
 
-    seedStars();
+const observer = new MutationObserver(()=>{
 
-}
+    if(letterScreen.classList.contains("active")){
 
-resize();
+        playLetter();
 
-window.addEventListener("resize",resize);
+    }
 
-function drawStars(){
+});
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+observer.observe(letterScreen,{
+    attributes:true
+});
 
-    bandStars.forEach(star=>{
 
-        star.a+=star.s;
+// =====================================
+// FLOATING PETALS
+// =====================================
 
-        const alpha=((Math.sin(star.a)+1)/2)*0.6;
+function createPetal(){
 
-        ctx.beginPath();
+    const petal=document.createElement("div");
 
-        ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
+    petal.innerHTML="❀";
 
-        ctx.fillStyle="rgba(220,210,255,"+alpha+")";
+    petal.style.position="fixed";
 
-        ctx.fill();
+    petal.style.left=Math.random()*100+"vw";
+
+    petal.style.top="-50px";
+
+    petal.style.fontSize=(18+Math.random()*18)+"px";
+
+    petal.style.opacity=".8";
+
+    petal.style.pointerEvents="none";
+
+    petal.style.transition="linear";
+
+    petal.style.zIndex="1000";
+
+    document.body.appendChild(petal);
+
+    let duration=8000+Math.random()*5000;
+
+    petal.animate([
+
+        {
+            transform:"translate(0,0) rotate(0deg)"
+        },
+
+        {
+            transform:`translate(${Math.random()*200-100}px,110vh) rotate(${720+Math.random()*720}deg)`
+        }
+
+    ],{
+
+        duration:duration,
+
+        easing:"linear"
 
     });
-
-    stars.forEach(star=>{
-
-        star.a+=star.s;
-
-        const alpha=(Math.sin(star.a)+1)/2;
-
-        ctx.beginPath();
-
-        ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
-
-        ctx.fillStyle="rgba(255,255,255,"+alpha+")";
-
-        ctx.fill();
-
-    });
-
-    requestAnimationFrame(drawStars);
-
-}
-
-drawStars();
-
-
-// =========================
-// HOLD STAR
-// =========================
-
-let holding=false;
-let timer;
-
-function beginHold(){
-
-    holding=true;
-
-    star.classList.add("held");
-
-    timer=setTimeout(()=>{
-
-        if(!holding) return;
-
-        showScreen(wishScreen);
-
-        setTimeout(()=>{
-
-            showScreen(envelopeScreen);
-
-        },2600);
-
-    },2000);
-
-}
-
-function cancelHold(){
-
-    holding=false;
-
-    clearTimeout(timer);
-
-    star.classList.remove("held");
-
-}
-
-star.addEventListener("mousedown",beginHold);
-star.addEventListener("mouseup",cancelHold);
-star.addEventListener("mouseleave",cancelHold);
-
-star.addEventListener("touchstart",beginHold);
-star.addEventListener("touchend",cancelHold);
-
-
-// =========================
-// ENVELOPE
-// =========================
-
-envelope.addEventListener("click",()=>{
-
-    if(envelope.classList.contains("opening")) return;
-
-    envelope.classList.add("opening");
 
     setTimeout(()=>{
 
-        showScreen(letterScreen);
+        petal.remove();
 
-    },1300);
+    },duration);
+
+}
+
+setInterval(createPetal,1200);
+
+
+// =====================================
+// GOLDEN PARTICLES
+// =====================================
+
+function sparkle(x,y){
+
+    for(let i=0;i<20;i++){
+
+        const s=document.createElement("div");
+
+        s.style.position="fixed";
+
+        s.style.width="5px";
+        s.style.height="5px";
+
+        s.style.borderRadius="50%";
+
+        s.style.background="#ffd76a";
+
+        s.style.left=x+"px";
+        s.style.top=y+"px";
+
+        s.style.pointerEvents="none";
+
+        document.body.appendChild(s);
+
+        const dx=(Math.random()-.5)*220;
+        const dy=(Math.random()-.5)*220;
+
+        s.animate([
+
+            {
+                transform:"translate(0,0)",
+                opacity:1
+            },
+
+            {
+                transform:`translate(${dx}px,${dy}px)`,
+                opacity:0
+            }
+
+        ],{
+
+            duration:900
+
+        });
+
+        setTimeout(()=>{
+
+            s.remove();
+
+        },900);
+
+    }
+
+}
+
+star.addEventListener("mousedown",(e)=>{
+
+    sparkle(
+        e.clientX,
+        e.clientY
+    );
 
 });
 
 
-// =========================
-// CONTINUE BUTTON
-// =========================
+// =====================================
+// RANDOM SHOOTING STAR
+// =====================================
 
-continueBtn.addEventListener("click",()=>{
+function randomMeteor(){
 
-    showScreen(endingScreen);
+    const meteor=document.createElement("div");
 
-});
+    meteor.innerHTML="✦";
+
+    meteor.style.position="fixed";
+
+    meteor.style.left="-100px";
+
+    meteor.style.top=Math.random()*250+"px";
+
+    meteor.style.fontSize="26px";
+
+    meteor.style.color="white";
+
+    meteor.style.opacity=".9";
+
+    meteor.style.zIndex="999";
+
+    document.body.appendChild(meteor);
+
+    meteor.animate([
+
+        {
+            transform:"translate(0,0)"
+        },
+
+        {
+            transform:"translate(130vw,300px)"
+        }
+
+    ],{
+
+        duration:2600,
+
+        easing:"linear"
+
+    });
+
+    setTimeout(()=>{
+
+        meteor.remove();
+
+    },2600);
+
+}
+
+setInterval(randomMeteor,9000);
+
+
+// =====================================
+// MUSIC BUTTON
+// =====================================
+
+const musicButton=document.createElement("button");
+
+musicButton.innerHTML="♫";
+
+musicButton.style.position="fixed";
+
+musicButton.style.top="20px";
+
+musicButton.style.right="20px";
+
+musicButton.style.width="50px";
+
+musicButton.style.height="50px";
+
+musicButton.style.borderRadius="50%";
+
+musicButton.style.border="none";
+
+musicButton.style.cursor="pointer";
+
+musicButton.style.background="rgba(255,255,255,.15)";
+
+musicButton.style.backdropFilter="blur(10px)";
+
+musicButton.style.color="white";
+
+musicButton.style.fontSize="22px";
+
+musicButton.style.zIndex="9999";
+
+document.body.appendChild(musicButton);
+
+let playing=false;
+
+musicButton.onclick=()=>{
+
+    if(!playing){
+
+        music.play();
+
+        playing=true;
+
+        musicButton.innerHTML="❚❚";
+
+    }else{
+
+        music.pause();
+
+        playing=false;
+
+        musicButton.innerHTML="♫";
+
+    }
+
+};
