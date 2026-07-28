@@ -56,37 +56,7 @@ rgba(255,255,255,.02),
 rgba(255,255,255,0)
 );
 
-z-index:-1;
-
-}
-
-/* ===========================
-   MILKY WAY NEBULA LAYER
-=========================== */
-
-.nebula{
-
-position:fixed;
-inset:0;
 z-index:-2;
-
-background:
-radial-gradient(ellipse 60% 40% at 25% 75%, rgba(201,119,154,.16), transparent 60%),
-radial-gradient(ellipse 50% 35% at 78% 20%, rgba(79,216,196,.13), transparent 60%),
-radial-gradient(ellipse 80% 55% at 50% 50%, rgba(120,100,220,.12), transparent 70%);
-
-mix-blend-mode:screen;
-
-animation:nebulaDrift 50s ease-in-out infinite alternate;
-
-pointer-events:none;
-
-}
-
-@keyframes nebulaDrift{
-
-0%{transform:translate(-2%,-1%) scale(1);}
-100%{transform:translate(2%,1%) scale(1.06);}
 
 }
 
@@ -109,11 +79,9 @@ align-items:center;
 
 opacity:0;
 
-transform:scale(1.08);
-
 pointer-events:none;
 
-transition:opacity 1.4s ease, transform 1.9s cubic-bezier(.16,.8,.2,1);
+transition:1.2s;
 
 padding:30px;
 
@@ -122,8 +90,6 @@ padding:30px;
 .screen.active{
 
 opacity:1;
-
-transform:scale(1);
 
 pointer-events:auto;
 
@@ -226,6 +192,8 @@ SHOOTING STAR
 
 margin-top:80px;
 
+font-size:80px;
+
 cursor:pointer;
 
 user-select:none;
@@ -240,27 +208,7 @@ twinkle 2s infinite;
 
 .shooting-star:hover{
 
-transform:scale(1.15);
-
-}
-
-.comet-svg{
-
-filter:drop-shadow(0 0 10px rgba(255,226,122,.75)) drop-shadow(0 0 22px rgba(255,226,122,.35));
-
-}
-
-.shooting-star.held{
-
-transform:scale(1.4);
-
-animation-play-state:paused;
-
-}
-
-.shooting-star.held .comet-svg{
-
-filter:drop-shadow(0 0 20px #ffe27a) drop-shadow(0 0 40px rgba(255,226,122,.6));
+transform:scale(1.25);
 
 }
 
@@ -374,12 +322,6 @@ font-family:'Cinzel',serif;
 ENVELOPE
 =========================== */
 
-#envelopeScreen{
-
-perspective:1300px;
-
-}
-
 .envelope{
 
 width:330px;
@@ -397,9 +339,7 @@ box-shadow:
 
 0 30px 60px rgba(0,0,0,.45);
 
-transition:transform .5s;
-
-transform-style:preserve-3d;
+transition:.5s;
 
 }
 
@@ -425,56 +365,6 @@ background:#e7d8c3;
 clip-path:
 
 polygon(0 0,100% 0,50% 100%);
-
-transform-origin:top center;
-
-transition:transform 1s cubic-bezier(.45,.15,.2,1);
-
-z-index:3;
-
-}
-
-.envelope.opening .flap{
-
-transform:rotateX(175deg);
-
-}
-
-.envelope.opening{
-
-transform:translateY(-6px);
-
-}
-
-.letterShadow{
-
-position:absolute;
-
-left:8%;
-
-right:8%;
-
-top:14%;
-
-height:74%;
-
-background:#fffef9;
-
-border-radius:4px;
-
-box-shadow:0 8px 20px rgba(0,0,0,.25);
-
-z-index:2;
-
-transform:translateY(4%);
-
-transition:transform 1.3s cubic-bezier(.34,1.56,.64,1);
-
-}
-
-.envelope.opening .letterShadow{
-
-transform:translateY(-58%) rotate(-1.5deg);
 
 }
 
@@ -670,127 +560,6 @@ letter-spacing:15px;
 animation:
 
 twinkle 2.5s infinite;
-
-}
-
-/* ===========================
-INK WRITING (letter paragraphs)
-=========================== */
-
-.paper p.ink-p{
-
-opacity:0;
-
--webkit-mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);
-
-mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);
-
-animation:inkReveal 2.2s linear forwards;
-
-}
-
-@keyframes inkReveal{
-
-0%{
-
-opacity:1;
-
--webkit-mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);
-
-mask-image:linear-gradient(90deg,#000 0%,#000 0%,transparent 0%);
-
-}
-
-100%{
-
-opacity:1;
-
--webkit-mask-image:linear-gradient(90deg,#000 100%,#000 100%,transparent 100%);
-
-mask-image:linear-gradient(90deg,#000 100%,#000 100%,transparent 100%);
-
-}
-
-}
-
-/* ===========================
-FLOWER — PETAL BY PETAL BLOOM
-=========================== */
-
-.flower-svg{
-
-display:block;
-
-}
-
-.flower-svg .petal{
-
-transform-box:fill-box;
-
-transform-origin:center;
-
-transform:scale(0);
-
-opacity:0;
-
-animation:petalBloom 1s cubic-bezier(.2,1.4,.4,1) forwards;
-
-}
-
-@keyframes petalBloom{
-
-0%{transform:scale(0) rotate(0deg);opacity:0;}
-
-60%{opacity:1;}
-
-100%{transform:scale(1) rotate(0deg);opacity:1;}
-
-}
-
-.flower-svg .flower-center{
-
-transform-box:fill-box;
-
-transform-origin:center;
-
-transform:scale(0);
-
-animation:centerPop .6s ease-out forwards;
-
-animation-delay:1.2s;
-
-}
-
-@keyframes centerPop{
-
-to{transform:scale(1);}
-
-}
-
-/* ===========================
-BIRTHDAY GLOW
-=========================== */
-
-.birthday-glow .title,
-.birthday-glow .name{
-
-animation:goldGlow 3.2s ease-in-out infinite;
-
-}
-
-@keyframes goldGlow{
-
-0%,100%{
-
-text-shadow:0 0 10px rgba(255,226,122,.35),0 0 3px rgba(255,215,100,.4);
-
-}
-
-50%{
-
-text-shadow:0 0 28px rgba(255,226,122,.9),0 0 10px rgba(255,215,100,.75);
-
-}
 
 }
 
