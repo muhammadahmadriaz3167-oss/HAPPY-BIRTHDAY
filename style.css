@@ -1,0 +1,614 @@
+/* ===========================
+   GOOGLE FONTS
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+    background:#020816;
+}
+
+/* ===========================
+   STAR CANVAS
+=========================== */
+
+#stars{
+
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-3;
+}
+
+/* ===========================
+   BACKGROUND
+=========================== */
+
+body{
+
+background:
+radial-gradient(circle at top,#1d2955 0%,#08101d 45%,#020816 100%);
+color:white;
+
+}
+
+.overlay{
+
+position:fixed;
+inset:0;
+
+background:
+
+linear-gradient(
+to bottom,
+rgba(255,255,255,.02),
+rgba(255,255,255,0)
+);
+
+z-index:-2;
+
+}
+
+/* ===========================
+SCREENS
+=========================== */
+
+.screen{
+
+position:absolute;
+inset:0;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:1.2s;
+
+padding:30px;
+
+}
+
+.screen.active{
+
+opacity:1;
+
+pointer-events:auto;
+
+}
+
+/* ===========================
+MOON
+=========================== */
+
+.moon{
+
+width:120px;
+height:120px;
+
+border-radius:50%;
+
+background:#fff;
+
+box-shadow:
+
+0 0 30px white,
+
+0 0 60px rgba(255,255,255,.5),
+
+0 0 120px rgba(255,255,255,.3);
+
+margin-bottom:40px;
+
+animation:
+
+moonFloat 6s ease-in-out infinite;
+
+}
+
+@keyframes moonFloat{
+
+0%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+100%{transform:translateY(0);}
+
+}
+
+/* ===========================
+HEADINGS
+=========================== */
+
+.title{
+
+font-family:'Cinzel',serif;
+
+font-size:48px;
+
+font-weight:600;
+
+letter-spacing:3px;
+
+text-align:center;
+
+}
+
+.name{
+
+margin-top:15px;
+
+font-size:58px;
+
+font-family:'Caveat',cursive;
+
+font-weight:700;
+
+color:#ffe7a6;
+
+text-shadow:
+
+0 0 12px gold;
+
+}
+
+.subtitle{
+
+margin-top:35px;
+
+font-size:20px;
+
+opacity:.85;
+
+text-align:center;
+
+max-width:650px;
+
+line-height:1.7;
+
+}
+
+/* ===========================
+SHOOTING STAR
+=========================== */
+
+.shooting-star{
+
+margin-top:80px;
+
+font-size:80px;
+
+cursor:pointer;
+
+user-select:none;
+
+transition:.4s;
+
+animation:
+
+twinkle 2s infinite;
+
+}
+
+.shooting-star:hover{
+
+transform:scale(1.25);
+
+}
+
+@keyframes twinkle{
+
+0%{
+
+opacity:.5;
+
+transform:scale(1);
+
+}
+
+50%{
+
+opacity:1;
+
+transform:scale(1.15);
+
+}
+
+100%{
+
+opacity:.5;
+
+transform:scale(1);
+
+}
+
+}
+
+.instruction{
+
+margin-top:40px;
+
+font-size:18px;
+
+opacity:.75;
+
+}
+
+/* ===========================
+WISH SCREEN
+=========================== */
+
+.wishCircle{
+
+width:240px;
+height:240px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+position:relative;
+
+background:
+
+rgba(255,255,255,.05);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+}
+
+.wishGlow{
+
+position:absolute;
+
+width:160px;
+height:160px;
+
+border-radius:50%;
+
+background:
+
+rgba(255,215,100,.45);
+
+filter:blur(35px);
+
+animation:
+
+pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{transform:scale(1);}
+50%{transform:scale(1.25);}
+100%{transform:scale(1);}
+
+}
+
+.wishText{
+
+position:relative;
+
+font-size:24px;
+
+font-family:'Cinzel',serif;
+
+}
+
+/* ===========================
+ENVELOPE
+=========================== */
+
+.envelope{
+
+width:330px;
+height:220px;
+
+background:#efe5d5;
+
+border-radius:10px;
+
+position:relative;
+
+cursor:pointer;
+
+box-shadow:
+
+0 30px 60px rgba(0,0,0,.45);
+
+transition:.5s;
+
+}
+
+.envelope:hover{
+
+transform:translateY(-8px);
+
+}
+
+.flap{
+
+position:absolute;
+
+top:0;
+
+left:0;
+
+width:100%;
+height:110px;
+
+background:#e7d8c3;
+
+clip-path:
+
+polygon(0 0,100% 0,50% 100%);
+
+}
+
+.seal{
+
+position:absolute;
+
+left:50%;
+
+top:95px;
+
+transform:translateX(-50%);
+
+width:58px;
+height:58px;
+
+border-radius:50%;
+
+background:#b81d24;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:24px;
+
+box-shadow:
+
+0 0 18px rgba(184,29,36,.55);
+
+}
+
+.openText{
+
+margin-top:45px;
+
+font-size:22px;
+
+font-family:'Caveat',cursive;
+
+}
+
+/* ===========================
+LETTER
+=========================== */
+
+.paper{
+
+width:min(900px,92vw);
+
+max-height:82vh;
+
+overflow:auto;
+
+background:#fffef9;
+
+color:#3b2d1f;
+
+padding:55px;
+
+border-radius:18px;
+
+box-shadow:
+
+0 40px 90px rgba(0,0,0,.45);
+
+}
+
+.paper h2{
+
+font-family:'Cinzel',serif;
+
+text-align:center;
+
+margin-bottom:35px;
+
+font-size:34px;
+
+}
+
+.paper p{
+
+font-family:'Caveat',cursive;
+
+font-size:31px;
+
+line-height:1.7;
+
+margin-bottom:30px;
+
+}
+
+.paper::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+.paper::-webkit-scrollbar-thumb{
+
+background:#d6c39d;
+
+border-radius:10px;
+
+}
+
+#continueBtn{
+
+margin-top:20px;
+
+padding:15px 40px;
+
+font-size:18px;
+
+border:none;
+
+border-radius:30px;
+
+background:#081b42;
+
+color:white;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#continueBtn:hover{
+
+background:#183b7d;
+
+transform:translateY(-2px);
+
+}
+
+/* ===========================
+ENDING
+=========================== */
+
+.flower{
+
+font-size:100px;
+
+animation:
+
+bloom 2s ease forwards;
+
+}
+
+@keyframes bloom{
+
+0%{
+
+transform:scale(.1);
+opacity:0;
+
+}
+
+100%{
+
+transform:scale(1);
+opacity:1;
+
+}
+
+}
+
+#endingScreen h2{
+
+margin-top:35px;
+
+font-family:'Cinzel',serif;
+
+font-size:42px;
+
+text-align:center;
+
+line-height:1.5;
+
+}
+
+.tinyStars{
+
+margin-top:45px;
+
+font-size:24px;
+
+letter-spacing:15px;
+
+animation:
+
+twinkle 2.5s infinite;
+
+}
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+.title{
+
+font-size:34px;
+
+}
+
+.name{
+
+font-size:46px;
+
+}
+
+.subtitle{
+
+font-size:17px;
+
+}
+
+.paper{
+
+padding:30px;
+
+}
+
+.paper p{
+
+font-size:24px;
+
+}
+
+.paper h2{
+
+font-size:28px;
+
+}
+
+#endingScreen h2{
+
+font-size:28px;
+
+}
+
+}
